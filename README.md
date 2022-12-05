@@ -1,3 +1,3 @@
-# My newly rennovated nvim setup
+# Neovim + LUa
 
-### Now uses Lua and got rid of alot of clutter
+Now uses Lua and got rid of alot of clutter
