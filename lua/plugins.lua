@@ -18,6 +18,9 @@ return require('packer').startup(function(use)
 
   -- peekaboo
   use 'junegunn/vim-peekaboo'
+
+  -- fugitive 
+  use 'tpope/vim-fugitive'
   
   --nvim-tree
   use {
