@@ -34,10 +34,8 @@ return {
   },
 
   -- fzf
-  {
-    'junegunn/fzf.vim',
-    requires = { 'junegunn/fzf', run = ':call fzf#install()' }
-  },
+   "junegunn/fzf", dir = "~/.fzf", build = "./install --all",
+   'junegunn/fzf.vim',
 
   -- formatter
   'mhartington/formatter.nvim'
