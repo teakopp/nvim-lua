@@ -16,6 +16,11 @@ return {
   -- fugitive
   'tpope/vim-fugitive',
 
+  -- mason.nvim
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+
   -- nvim-tree
   {
     'kyazdani42/nvim-tree.lua',
@@ -30,6 +35,14 @@ return {
     "folke/tokyonight.nvim",
     config = function()
       require("tokyonight").setup{}
+    end
+  },
+
+  -- Nord Colorscheme
+  {
+    "ellisonleao/gruvbox.nvim",
+    config = function()
+      require("gruvbox").setup{}
     end
   },
 

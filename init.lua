@@ -1,5 +1,6 @@
 local plugins = require('plugins') 
 
+
 -- Bootstrap Lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -23,6 +24,12 @@ lazy.setup(plugins, {
   disable_netrw = true,
 })
 
+-- Setup Mason.nvim to create lsp config
+require("mason").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = { "lua_ls", "pyright", "gopls", "dockerls", "yamlls", "bashls", "eslint", "solargraph", "rubocop"},
+}
+
 -- Load LSP configurations
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.gopls.setup{}
@@ -34,6 +41,7 @@ require'lspconfig'.eslint.setup{}
 -- Ruby
 require'lspconfig'.solargraph.setup{}
 
+-- Lua
 require'lspconfig'.lua_ls.setup {
   on_init = function(client)
     local path = client.workspace_folders[1].name
@@ -77,8 +85,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- set hidden (Allows you switch files without saving them)
+vim.opt.hidden = true
+
+-- Tell colorscheme it's dark so I can read comments
+vim.opt.background = "dark"
+
 -- Load ColorScheme
-vim.cmd[[colorscheme tokyonight-night]]
+vim.cmd[[colorscheme gruvbox]]
 
 -- Show line numbers
 vim.wo.number = true
