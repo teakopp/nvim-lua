@@ -27,7 +27,7 @@ lazy.setup(plugins, {
 -- Setup Mason.nvim to create lsp config
 require("mason").setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "pyright", "gopls", "dockerls", "yamlls", "bashls", "eslint", "solargraph", "rubocop"},
+    ensure_installed = { "lua_ls", "pyright", "gopls", "dockerls", "yamlls", "bashls", "eslint","tsserver", "solargraph", "rubocop", "clangd"},
 }
 
 -- Load LSP configurations
@@ -36,7 +36,9 @@ require'lspconfig'.gopls.setup{}
 require'lspconfig'.dockerls.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.bashls.setup{}
+require'lspconfig'.tsserver.setup{}
 require'lspconfig'.eslint.setup{}
+require'lspconfig'.clangd.setup{}
 
 -- Ruby
 require'lspconfig'.solargraph.setup{}
@@ -84,6 +86,7 @@ vim.api.nvim_create_autocmd("FileType", {
     }
   end,
 })
+
 
 -- set hidden (Allows you switch files without saving them)
 vim.opt.hidden = true

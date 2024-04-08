@@ -21,6 +21,9 @@ return {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
 
+  -- Co-Pilot
+  "zbirenbaum/copilot.lua",
+
   -- nvim-tree
   {
     'kyazdani42/nvim-tree.lua',
