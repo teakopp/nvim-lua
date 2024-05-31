@@ -27,7 +27,7 @@ lazy.setup(plugins, {
 -- Setup Mason.nvim to create lsp config
 require("mason").setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "pyright", "gopls", "dockerls", "yamlls", "bashls", "eslint","tsserver", "solargraph", "rubocop", "clangd"},
+    ensure_installed = { "lua_ls", "pyright", "gopls", "dockerls", "yamlls", "bashls", "eslint", "tsserver", "solargraph", "rubocop", "clangd","graphql"},
 }
 
 -- Load LSP configurations
@@ -39,6 +39,7 @@ require'lspconfig'.bashls.setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.eslint.setup{}
 require'lspconfig'.clangd.setup{}
+require'lspconfig'.graphql.setup{}
 
 -- Ruby
 require'lspconfig'.solargraph.setup{}
@@ -87,6 +88,18 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Substitute
+vim.keymap.set("n", "s", require('substitute').operator, { noremap = true })
+vim.keymap.set("n", "ss", require('substitute').line, { noremap = true })
+vim.keymap.set("n", "S", require('substitute').eol, { noremap = true })
+vim.keymap.set("x", "s", require('substitute').visual, { noremap = true })
+
+-- Telescope
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- set hidden (Allows you switch files without saving them)
 vim.opt.hidden = true

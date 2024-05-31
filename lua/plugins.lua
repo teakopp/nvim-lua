@@ -22,7 +22,10 @@ return {
     "neovim/nvim-lspconfig",
 
   -- Co-Pilot
-  "zbirenbaum/copilot.lua",
+  'github/copilot.vim',
+
+  -- Better Quickfix menu 
+  'kevinhwang91/nvim-bqf',
 
   -- nvim-tree
   {
@@ -54,6 +57,14 @@ return {
    'junegunn/fzf.vim',
 
   -- formatter
-  'mhartington/formatter.nvim'
+  'mhartington/formatter.nvim',
+
+  -- Substitute
+  "gbprod/substitute.nvim",
+
+  -- Telescope
+   'nvim-lua/plenary.nvim',
+   'nvim-telescope/telescope.nvim', tag = 'latest',
+      dependencies = { 'nvim-lua/plenary.nvim' }
 
 }
