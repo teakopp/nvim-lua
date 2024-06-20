@@ -63,8 +63,16 @@ return {
   "gbprod/substitute.nvim",
 
   -- Telescope
+  {
    'nvim-lua/plenary.nvim',
    'nvim-telescope/telescope.nvim', tag = 'latest',
       dependencies = { 'nvim-lua/plenary.nvim' }
+  },
+
+  -- Telescope file browser
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
 
 }

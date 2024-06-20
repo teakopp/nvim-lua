@@ -101,6 +101,14 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
+-- Telescope File Browser
+vim.keymap.set("n", "<space>fb", function()
+	require("telescope").extensions.file_browser.file_browser()
+end)
+
+-- open file_browser with the path of the current buffer
+vim.keymap.set("n", "<space>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+
 -- set hidden (Allows you switch files without saving them)
 vim.opt.hidden = true
 
