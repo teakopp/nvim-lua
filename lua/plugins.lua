@@ -24,33 +24,24 @@ return {
   -- Co-Pilot
   'github/copilot.vim',
 
+  -- Follow OS light and dark mode
+  'vimpostor/vim-lumen',
+
   -- Better Quickfix menu 
   'kevinhwang91/nvim-bqf',
 
   -- nvim-tree
+  'nvim-tree/nvim-web-devicons',
   {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icons
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
     cmd = 'NvimTreeToggle',
   },
 
-  -- TokyoNight Colorscheme
-  {
-    "folke/tokyonight.nvim",
-    config = function()
-      require("tokyonight").setup{}
-    end
-  },
-
-  -- Nord Colorscheme
-  {
-    "ellisonleao/gruvbox.nvim",
-    config = function()
-      require("gruvbox").setup{}
-    end
-  },
+  -- Everforest Colorscheme
+  "sainnhe/everforest",
 
   -- fzf
    "junegunn/fzf", dir = "~/.fzf", build = "./install --all",
@@ -74,5 +65,15 @@ return {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
+
+  -- nvim-autopairs
+  {
+      'windwp/nvim-autopairs',
+      event = "InsertEnter",
+      config = true
+      -- use opts = {} for passing setup options
+      -- this is equivalent to setup({}) function
+  },
+
 
 }

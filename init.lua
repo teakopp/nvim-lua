@@ -24,6 +24,7 @@ lazy.setup(plugins, {
   disable_netrw = true,
 })
 
+
 -- Setup Mason.nvim to create lsp config
 require("mason").setup()
 require("mason-lspconfig").setup {
@@ -36,10 +37,11 @@ require'lspconfig'.gopls.setup{}
 require'lspconfig'.dockerls.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.bashls.setup{}
-require'lspconfig'.tsserver.setup{}
+require'lspconfig'.ts_ls.setup{}
 require'lspconfig'.eslint.setup{}
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.graphql.setup{}
+require'lspconfig'.clangd.setup{}
 
 -- Ruby
 require'lspconfig'.solargraph.setup{}
@@ -76,6 +78,15 @@ require'lspconfig'.lua_ls.setup {
   end
 }
 
+-- Additonal Features for Clang 
+local lspconfig = require('lspconfig')
+lspconfig.clangd.setup({
+  cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+  init_options = {
+    fallbackFlags = { '-std=c++17' },
+  },
+})
+
 -- Rubocop Setup
 vim.opt.signcolumn = "yes"
 vim.api.nvim_create_autocmd("FileType", {
@@ -87,6 +98,9 @@ vim.api.nvim_create_autocmd("FileType", {
     }
   end,
 })
+
+-- Load ColorScheme
+vim.cmd[[colorscheme everforest]]
 
 -- Substitute
 vim.keymap.set("n", "s", require('substitute').operator, { noremap = true })
@@ -112,17 +126,16 @@ vim.keymap.set("n", "<space>fb", ":Telescope file_browser path=%:p:h select_buff
 -- set hidden (Allows you switch files without saving them)
 vim.opt.hidden = true
 
--- Tell colorscheme it's dark so I can read comments
-vim.opt.background = "dark"
-
--- Load ColorScheme
-vim.cmd[[colorscheme gruvbox]]
-
 -- Show line numbers
 vim.wo.number = true
 
 -- Change indent to 2 spaces
-vim.bo.shiftwidth = 2
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
+
 
 -- OR set termguicolors to enable highlight groups
 vim.o.termguicolors = true
