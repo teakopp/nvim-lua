@@ -23,7 +23,7 @@ require("lazy").setup(plugins, {
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup ({
-  ensure_installed = { "lua_ls", "pyright", "gopls", "dockerls", "yamlls", "bashls", "eslint", "ts_ls", "solargraph", "rubocop", "clangd", "graphql" },
+  ensure_installed = { "lua_ls", "pyright", "gopls", "dockerls", "yamlls", "bashls", "eslint", "ts_ls", "solargraph", "rubocop", "clangd", "graphql", "terraformls" },
 })
 
 -- Autocompletion capabilities
@@ -31,7 +31,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- LSP setup
 local lspconfig = require('lspconfig')
-local servers = { "pyright", "gopls", "dockerls", "yamlls", "bashls", "ts_ls", "clangd", "graphql", "solargraph" }
+local servers = { "pyright", "gopls", "dockerls", "yamlls", "bashls", "ts_ls", "clangd", "graphql", "solargraph", "terraformls" }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup { capabilities = capabilities }
 end
@@ -133,13 +133,11 @@ vim.api.nvim_set_keymap('n', '<F8>', ":colorscheme tokyonight-day <CR>", { norem
 vim.api.nvim_set_keymap('n', '<F9>', ":colorscheme tokyonight-night <CR>", { noremap = true, silent = true })
 
 -- Formatter
-require('formatter').setup({
-  logging = false,
-  filetype = {
-    python = { function() return { exe = 'black', args = { '-' }, stdin = true } end },
-    go = { function() return { exe = 'gofmt', args = {}, stdin = true } end },
-    yaml = { function() return { exe = 'prettier', args = { '--stdin-filepath', vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)) }, stdin = true } end },
-  },
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.ts", "*.js", "*.tsx", "*.jsx" },
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
 })
 
 -- LSP mappings

@@ -38,6 +38,21 @@ return {
     cmd = 'NvimTreeToggle',
   },
 
+  -- nvim-treesitter
+  -- in your plugins.lua list
+{
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  config = function()
+    require("nvim-treesitter.configs").setup {
+      -- include whatever other languages you edit
+      ensure_installed = { "lua" },
+      highlight = { enable = true },
+    }
+  end,
+},
+
+
   -- Everforest Colorscheme
   "sainnhe/everforest",
 
