@@ -19,9 +19,6 @@ return {
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
 
-  -- Co-Pilot
-  'github/copilot.vim',
-
   -- Follow OS light and dark mode
   'vimpostor/vim-lumen',
 
@@ -44,7 +41,7 @@ return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   config = function()
-    require("nvim-treesitter.configs").setup {
+    require("nvim-treesitter.config").setup {
       -- include whatever other languages you edit
       ensure_installed = { "lua" },
       highlight = { enable = true },

@@ -1,6 +1,5 @@
 local plugins = require('plugins')
 
--- 1. BOOTSTRAP LAZY.NVIM
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -10,13 +9,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
--- 2. LOAD PLUGINS
+-- LOAD PLUGINS
 require("lazy").setup(plugins, {
   termguicolors = true,
   disable_netrw = true,
 })
 
--- 3. MASON & CAPABILITIES
+-- MASON
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
@@ -28,11 +27,39 @@ require("mason-lspconfig").setup({
 -- Common capabilities for nvim-cmp
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- 4. NATIVE LSP CONFIGURATION (0.11 API)
+-- LSP CONFIGURATION (0.11 API)
 local servers = {
   "pyright", "gopls", "dockerls", "yamlls", "bashls",
   "ts_ls", "clangd", "graphql", "solargraph", "terraformls", "lua_ls"
 }
+
+-- Godot stuff
+-- paths to check for project.godot file
+vim.lsp.config('gdscript', {})
+vim.lsp.enable('gdscript')
+
+local paths_to_check = {'/', '/../'}
+local is_godot_project = false
+local godot_project_path = ''
+local cwd = vim.fn.getcwd()
+
+-- iterate over paths and check
+for key, value in pairs(paths_to_check) do
+    if vim.uv.fs_stat(cwd .. value .. 'project.godot') then
+        is_godot_project = true
+        godot_project_path = cwd .. value
+        break
+    end
+end
+
+-- check if server is already running in godot project path
+local is_server_running = vim.uv.fs_stat(godot_project_path .. '/server.pipe')
+-- start server, if not already running
+if is_godot_project and not is_server_running then
+    vim.fn.serverstart(godot_project_path .. '/server.pipe')
+end
+
+--
 
 for _, lsp in ipairs(servers) do
   -- Fetch the default configuration from nvim-lspconfig data
@@ -83,7 +110,7 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
--- 5. KEYBINDINGS (LspAttach Autocommand)
+-- Keybindings
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
@@ -104,7 +131,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- 6. RUBOCOP (Manual Startup)
+-- Rubocop
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "ruby",
   callback = function()
@@ -112,7 +139,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- 7. GENERAL EDITOR SETTINGS & UI
+-- General
 vim.cmd[[colorscheme everforest]]
 vim.o.background = "dark"
 vim.opt.hidden = true
@@ -127,7 +154,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.signcolumn = "yes"
 
--- 8. KEYMAPS (General & Plugins)
+-- Keymaps 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
